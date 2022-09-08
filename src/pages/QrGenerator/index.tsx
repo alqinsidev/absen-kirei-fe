@@ -29,7 +29,7 @@ const QrGenerator = () => {
 
   useEffect(() => {
     getQr();
-    QRGenerator = setInterval(getQr, 10000);
+    QRGenerator = setInterval(getQr, 3000);
 
     return () => clearInterval(QRGenerator);
   }, []);
