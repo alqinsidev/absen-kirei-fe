@@ -1,25 +1,140 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "theme_color" : "#9ED8F4",
+  "background_color" : "#f3f3f3",
+  "display" : "fullscreen",
+  "scope" : "https://presensi.kirei.co.id/",
+  "start_url" : "https://presensi.kirei.co.id/",
+  "name" : "Kirei Superapps",
+  "short_name" : "Kirei Apps",
+  "orientation": "potrait",
   "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
-}
+      {
+        "src": "assets/icon/android/android-launchericon-512-512.png",
+        "sizes": "512x512"
+      },
+      {
+        "src": "assets/icon/android/android-launchericon-192-192.png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "assets/icon/android/android-launchericon-144-144.png",
+        "sizes": "144x144"
+      },
+      {
+        "src": "assets/icon/android/android-launchericon-96-96.png",
+        "sizes": "96x96"
+      },
+      {
+        "src": "assets/icon/android/android-launchericon-72-72.png",
+        "sizes": "72x72"
+      },
+      {
+        "src": "assets/icon/android/android-launchericon-48-48.png",
+        "sizes": "48x48"
+      },
+      {
+        "src": "assets/icon/ios/16.png",
+        "sizes": "16x16"
+      },
+      {
+        "src": "assets/icon/ios/20.png",
+        "sizes": "20x20"
+      },
+      {
+        "src": "assets/icon/ios/29.png",
+        "sizes": "29x29"
+      },
+      {
+        "src": "assets/icon/ios/32.png",
+        "sizes": "32x32"
+      },
+      {
+        "src": "assets/icon/ios/40.png",
+        "sizes": "40x40"
+      },
+      {
+        "src": "assets/icon/ios/50.png",
+        "sizes": "50x50"
+      },
+      {
+        "src": "assets/icon/ios/57.png",
+        "sizes": "57x57"
+      },
+      {
+        "src": "assets/icon/ios/58.png",
+        "sizes": "58x58"
+      },
+      {
+        "src": "assets/icon/ios/60.png",
+        "sizes": "60x60"
+      },
+      {
+        "src": "assets/icon/ios/64.png",
+        "sizes": "64x64"
+      },
+      {
+        "src": "assets/icon/ios/72.png",
+        "sizes": "72x72"
+      },
+      {
+        "src": "assets/icon/ios/76.png",
+        "sizes": "76x76"
+      },
+      {
+        "src": "assets/icon/ios/80.png",
+        "sizes": "80x80"
+      },
+      {
+        "src": "assets/icon/ios/87.png",
+        "sizes": "87x87"
+      },
+      {
+        "src": "assets/icon/ios/100.png",
+        "sizes": "100x100"
+      },
+      {
+        "src": "assets/icon/ios/114.png",
+        "sizes": "114x114"
+      },
+      {
+        "src": "assets/icon/ios/120.png",
+        "sizes": "120x120"
+      },
+      {
+        "src": "assets/icon/ios/128.png",
+        "sizes": "128x128"
+      },
+      {
+        "src": "assets/icon/ios/144.png",
+        "sizes": "144x144"
+      },
+      {
+        "src": "assets/icon/ios/152.png",
+        "sizes": "152x152"
+      },
+      {
+        "src": "assets/icon/ios/167.png",
+        "sizes": "167x167"
+      },
+      {
+        "src": "assets/icon/ios/180.png",
+        "sizes": "180x180"
+      },
+      {
+        "src": "assets/icon/ios/192.png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "assets/icon/ios/256.png",
+        "sizes": "256x256"
+      },
+      {
+        "src": "assets/icon/ios/512.png",
+        "sizes": "512x512"
+      },
+      {
+        "src": "assets/icon/ios/1024.png",
+        "sizes": "1024x1024"
+      }
+    ]
+  }
