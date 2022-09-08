@@ -47,9 +47,9 @@ const Login: React.FC = () => {
       const userInfo = JSON.stringify(user);
       await localStorage.setItem("@userInfo", userInfo);
       if (user.role_id !== 1) {
-        navigate("/scanner");
+        navigate("/scanner", { replace: true });
       } else {
-        navigate("/generate");
+        navigate("/generate", { replace: true });
       }
     } catch (error) {
       const err = error as AxiosError;
