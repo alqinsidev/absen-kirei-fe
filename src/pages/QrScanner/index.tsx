@@ -8,6 +8,7 @@ function QrScanner() {
   const [token, setToken] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [user, setUser] = useState<string>("");
 
   useEffect(() => {
     if (qrRef.current) {
@@ -36,7 +37,8 @@ function QrScanner() {
     scanTimer = setTimeout(() => {
       storePresence(e.target.value)
         .then((res) => {
-          console.log(res, "res");
+          setUser(res.user.full_name);
+          setTimeout(() => setUser(""), 3000);
         })
         .catch((err) => {
           setErrorMessage(err.response.data.message);
@@ -45,7 +47,7 @@ function QrScanner() {
         .finally(() => {
           setToken("");
         });
-    }, 300);
+    }, 500);
   };
 
   const storePresence = async (input: string) => {
@@ -83,8 +85,9 @@ function QrScanner() {
           value={token}
           style={{ opacity: 0.1 }}
         />
-        <small>{isError ? errorMessage : null}</small>
+        <small style={{ color: "red" }}>{isError ? errorMessage : null}</small>
         {/* <Typography>{date.toString()}</Typography> */}
+        <Typography>{user}</Typography>
       </Box>
     </Container>
   );
