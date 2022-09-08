@@ -1,5 +1,6 @@
 import { Alert, Box, Button, Container, Typography } from "@mui/material";
 import { AxiosError } from "axios";
+import moment from "moment";
 import React, { useState, useEffect } from "react";
 import QRCode from "react-qr-code";
 import { useNavigate } from "react-router-dom";
@@ -70,14 +71,17 @@ const QrGenerator = () => {
             flexDirection: "column",
           }}
         >
-          <Typography variant="h4" sx={{ marginBottom: 5 }}>
-            QR Absensi
+          <Typography variant="h4" sx={{ marginBottom: 1 }}>
+            QR PRESENSI
+          </Typography>
+          <Typography sx={{ marginBottom: 3 }}>
+            {moment().format(`DD MMMM YYYY`)}
           </Typography>
           {activeToken !== "" && <QRCode value={activeToken} />}
           <Typography variant="body1" sx={{ marginTop: 5 }}>
             {employee.toUpperCase()}
           </Typography>
-          <Button color="error" sx={{ marginTop: 10 }} onClick={logout}>
+          <Button color="error" sx={{ marginTop: 3 }} onClick={logout}>
             Logout
           </Button>
         </Box>
