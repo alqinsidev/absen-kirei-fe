@@ -45,7 +45,7 @@ function QrScanner() {
         .finally(() => {
           setToken("");
         });
-    }, 2000);
+    }, 300);
   };
 
   const storePresence = async (input: string) => {
