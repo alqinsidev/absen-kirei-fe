@@ -1,6 +1,6 @@
 import Login from "../pages/Auth/Login";
-import { Route, Routes } from "react-router-dom";
-import React from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import QrGenerator from "../pages/QrGenerator";
 import QrScanner from "../pages/QrScanner";
 
@@ -15,6 +15,16 @@ const routes: PageRoute[] = [
 ];
 
 const MainRoutes: React.FC = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const userString = localStorage.getItem("@userInfo") || "";
+    const user = userString !== "" ? JSON.parse(userString) : null;
+    if (user && user.role_id === 1) {
+      navigate("/generate", { replace: true });
+    } else {
+      navigate("/scanner", { replace: true });
+    }
+  }, []);
   return (
     <Routes>
       {routes.map((route: PageRoute) => (
