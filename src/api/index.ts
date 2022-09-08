@@ -3,7 +3,7 @@ import axios from "axios";
 const accessToken = localStorage.getItem("@accessToken");
 
 const client = axios.create({
-  baseURL: "http://server-1.kirei.co.id:9999",
+  baseURL: "https://server-1.kirei.co.id/api",
   headers: {
     Authorization: `Bearer ${accessToken}`,
   },
