@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Alert, Box, Container, Typography } from "@mui/material";
 import React, { useEffect, useState, useRef } from "react";
 import AbsenService from "../../services/absenService";
 let scanTimer: ReturnType<typeof setTimeout>;
@@ -38,7 +38,7 @@ function QrScanner() {
       storePresence(e.target.value)
         .then((res) => {
           setUser(res.user.full_name);
-          setTimeout(() => setUser(""), 3000);
+          setTimeout(() => setUser(""), 10000);
         })
         .catch((err) => {
           setErrorMessage(err.response.data.message);
@@ -83,11 +83,17 @@ function QrScanner() {
           ref={qrRef}
           onChange={handleChange}
           value={token}
-          style={{ opacity: 0.1 }}
+          style={{ opacity: 0.01, position: "absolute" }}
         />
-        <small style={{ color: "red" }}>{isError ? errorMessage : null}</small>
+        {isError && (
+          <Alert severity="error" sx={{ marginTop: 2 }}>
+            {errorMessage}
+          </Alert>
+        )}
         {/* <Typography>{date.toString()}</Typography> */}
-        <Typography>{user}</Typography>
+        {user !== "" && (
+          <Alert sx={{ marginTop: 5 }}>{user.toUpperCase()}</Alert>
+        )}
       </Box>
     </Container>
   );
