@@ -21,8 +21,10 @@ const MainRoutes: React.FC = () => {
     const user = userString !== "" ? JSON.parse(userString) : null;
     if (user && user.role_id === 1) {
       navigate("/generate", { replace: true });
-    } else {
+    } else if (user && user.role_id === 0) {
       navigate("/scanner", { replace: true });
+    } else {
+      navigate("/", { replace: true });
     }
   }, []);
   return (
