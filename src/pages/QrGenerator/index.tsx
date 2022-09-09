@@ -4,21 +4,29 @@ import moment from "moment";
 import React, { useState, useEffect } from "react";
 import QRCode from "react-qr-code";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hook";
+import { LogoutAsync } from "../../redux/slice/AuthSlice";
 import AbsenService from "../../services/absenService";
 
 let QRGenerator: ReturnType<typeof setInterval>;
 
 const QrGenerator = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [activeToken, setActiveToken] = useState<string>("");
   const [employee, setEmployee] = useState<string>("");
   const [hasError, setHasError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const logout = () => {
-    localStorage.setItem("@userInfo", "");
-    localStorage.setItem("@accessToken", "");
-    navigate("/", { replace: true });
+  const logout = async () => {
+    try {
+      dispatch(LogoutAsync());
+      localStorage.setItem("@userInfo", "");
+      localStorage.setItem("@accessToken", "");
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getQr = async () => {

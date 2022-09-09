@@ -3,6 +3,8 @@ import { Alert, Box, Container, TextField, Typography } from "@mui/material";
 import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../redux/hook";
+import { LoginAsync } from "../../../redux/slice/AuthSlice";
 import AbsenService from "../../../services/absenService";
 
 interface LoginCredential {
@@ -17,6 +19,8 @@ type CustomError = {
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [loginCredential, setLoginCredential] = useState<LoginCredential>({
     username: "",
     password: "",
@@ -41,11 +45,12 @@ const Login: React.FC = () => {
     setIsFetch(true);
     try {
       const res = await AbsenService.login(loginCredential);
+      dispatch(LoginAsync(loginCredential));
       const accessToken = res.data.data.access_token.token;
-      await localStorage.setItem("@accessToken", accessToken);
+      localStorage.setItem("@accessToken", accessToken);
       const user = res.data.data.user;
       const userInfo = JSON.stringify(user);
-      await localStorage.setItem("@userInfo", userInfo);
+      localStorage.setItem("@userInfo", userInfo);
       if (user.role_id !== 1) {
         navigate("/scanner", { replace: true });
       } else {
