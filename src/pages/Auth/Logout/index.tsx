@@ -9,6 +9,8 @@ const Logout = () => {
   const logout = async () => {
     try {
       await dispatch(LogoutAsync());
+      console.log("loggin out");
+
       navigate("/", { replace: true });
     } catch (error) {
       console.error(error);

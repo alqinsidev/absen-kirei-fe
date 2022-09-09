@@ -1,5 +1,12 @@
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, Container, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Container,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -70,13 +77,22 @@ const Login: React.FC = () => {
     }
   };
 
-  if (AuthState.isLogged && AuthState.user) {
+  const handleSuccessLogin = () => {
+    setHasError(false);
     if (AuthState.user.role_id === 1) {
       navigate("generate", { replace: true });
     } else {
       navigate("scanner", { replace: true });
     }
-  }
+  };
+
+  // if (AuthState.isLogged && AuthState.user) {
+  //   if (AuthState.user.role_id === 1) {
+  //     navigate("generate", { replace: true });
+  //   } else {
+  //     navigate("scanner", { replace: true });
+  //   }
+  // }
 
   return (
     <Container
@@ -88,6 +104,16 @@ const Login: React.FC = () => {
         height: "80vh",
       }}
     >
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={AuthState.isLogged}
+        autoHideDuration={2000}
+        onClose={handleSuccessLogin}
+      >
+        {AuthState.user && (
+          <Alert>Berhasil Login - {AuthState.user.full_name}</Alert>
+        )}
+      </Snackbar>
       <Box
         sx={{
           display: "flex",
@@ -126,6 +152,7 @@ const Login: React.FC = () => {
             onClick={() => handleSubmit()}
             onKeyDown={handleKeyboard}
             loading={isFetch}
+            disabled={AuthState.isLogged}
           >
             Sign In
           </LoadingButton>

@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   Skeleton,
+  Snackbar,
   Typography,
 } from "@mui/material";
 import { AxiosError } from "axios";
@@ -11,23 +12,31 @@ import moment from "moment";
 import React, { useState, useEffect } from "react";
 import QRCode from "react-qr-code";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { LogoutAsync } from "../../redux/slice/AuthSlice";
 import AbsenService from "../../services/absenService";
 
 let QRGenerator: ReturnType<typeof setInterval>;
 
 const QrGenerator = () => {
+  const AuthState = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   const [activeToken, setActiveToken] = useState<string>("");
   const [employee, setEmployee] = useState<string>("");
   const [hasError, setHasError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
+  const handleLogout = async () => {
+    try {
+      await dispatch(LogoutAsync());
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const logout = async () => {
     try {
-      dispatch(LogoutAsync());
       navigate("/", { replace: true });
     } catch (error) {
       console.error(error);
@@ -51,6 +60,7 @@ const QrGenerator = () => {
   };
 
   useEffect(() => {
+    getQr();
     QRGenerator = setInterval(getQr, 5000);
 
     return () => clearInterval(QRGenerator);
@@ -75,6 +85,18 @@ const QrGenerator = () => {
         height: "100vh",
       }}
     >
+      {!AuthState.isLogged && (
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={!AuthState.isLogged}
+          autoHideDuration={5000}
+          onClose={logout}
+        >
+          {!AuthState.isLogged && (
+            <Alert severity="info">Berhasil Logout</Alert>
+          )}
+        </Snackbar>
+      )}
       {!hasError && (
         <Box
           sx={{
@@ -103,7 +125,12 @@ const QrGenerator = () => {
               sx={{ fontSize: "1.2rem", marginTop: 5, width: "50%" }}
             />
           )}
-          <Button color="error" sx={{ marginTop: 3 }} onClick={logout}>
+          <Button
+            color="error"
+            sx={{ marginTop: 3 }}
+            onClick={handleLogout}
+            disabled={!AuthState.isLogged}
+          >
             Logout
           </Button>
         </Box>
