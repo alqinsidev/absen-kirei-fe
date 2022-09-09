@@ -1,4 +1,11 @@
-import { Alert, Box, Button, Container, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  Skeleton,
+  Typography,
+} from "@mui/material";
 import { AxiosError } from "axios";
 import moment from "moment";
 import React, { useState, useEffect } from "react";
@@ -21,8 +28,6 @@ const QrGenerator = () => {
   const logout = async () => {
     try {
       dispatch(LogoutAsync());
-      localStorage.setItem("@userInfo", "");
-      localStorage.setItem("@accessToken", "");
       navigate("/", { replace: true });
     } catch (error) {
       console.error(error);
@@ -86,9 +91,19 @@ const QrGenerator = () => {
             {moment().format(`DD MMMM YYYY`)}
           </Typography>
           {activeToken !== "" && <QRCode value={activeToken} />}
-          <Typography variant="body1" sx={{ marginTop: 5 }}>
-            {employee.toUpperCase()}
-          </Typography>
+          {activeToken === "" && (
+            <Skeleton variant="rectangular" width={256} height={256} />
+          )}
+          {employee !== "" ? (
+            <Typography variant="body1" sx={{ marginTop: 5 }}>
+              {employee.toUpperCase()}
+            </Typography>
+          ) : (
+            <Skeleton
+              variant="text"
+              sx={{ fontSize: "1.2rem", marginTop: 5, width: "50%" }}
+            />
+          )}
           <Button color="error" sx={{ marginTop: 3 }} onClick={logout}>
             Logout
           </Button>

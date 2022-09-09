@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import QrGenerator from "../pages/QrGenerator";
 import QrScanner from "../pages/QrScanner";
+import { useAppSelector } from "../redux/hook";
 
 interface PageRoute {
   path: string;
@@ -16,9 +17,10 @@ const routes: PageRoute[] = [
 
 const MainRoutes: React.FC = () => {
   const navigate = useNavigate();
+  const Auth = useAppSelector((state) => state.auth);
+
   useEffect(() => {
-    const userString = localStorage.getItem("@userInfo") || "";
-    const user = userString !== "" ? JSON.parse(userString) : null;
+    const user = Auth.user;
     if (user && user.role_id === 1) {
       navigate("/generate", { replace: true });
     } else if (user && user.role_id === 0) {

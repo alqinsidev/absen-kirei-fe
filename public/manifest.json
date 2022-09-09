@@ -2,11 +2,11 @@
   "theme_color" : "#9ED8F4",
   "background_color" : "#f3f3f3",
   "display" : "fullscreen",
-  "scope" : "https://presensi.kirei.co.id/",
-  "start_url" : "https://presensi.kirei.co.id/",
+  "scope" : ".",
+  "start_url" : ".",
   "name" : "Kirei Superapps",
   "short_name" : "Kirei Apps",
-  "orientation": "potrait",
+  "orientation": "portrait",
   "icons": [
       {
         "src": "assets/icon/android/android-launchericon-512-512.png",

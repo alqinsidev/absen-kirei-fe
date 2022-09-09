@@ -5,8 +5,11 @@ import MainRoutes from "./routes";
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { injectStore } from "./api";
 
 const theme = createTheme();
+injectStore(store);
+
 const App = () => {
   return (
     <ThemeProvider theme={theme}>

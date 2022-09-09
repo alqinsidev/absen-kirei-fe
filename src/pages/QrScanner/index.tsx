@@ -16,20 +16,6 @@ function QrScanner() {
     }
   }, []);
 
-  useEffect(() => {
-    loginHandler();
-  }, []);
-
-  const loginHandler = async () => {
-    try {
-      const res = await AbsenService.loginScanner();
-      const accessToken = res.data.data.access_token.token;
-      localStorage.setItem("@accessToken", accessToken);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsError(false);
     clearTimeout(scanTimer);

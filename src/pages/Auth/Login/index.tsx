@@ -3,7 +3,7 @@ import { Alert, Box, Container, TextField, Typography } from "@mui/material";
 import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../redux/hook";
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { LoginAsync } from "../../../redux/slice/AuthSlice";
 import AbsenService from "../../../services/absenService";
 
@@ -18,6 +18,7 @@ type CustomError = {
 };
 
 const Login: React.FC = () => {
+  const AuthState = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -44,22 +45,16 @@ const Login: React.FC = () => {
   const handleSubmit = async () => {
     setIsFetch(true);
     try {
-      const res = await AbsenService.login(loginCredential);
-      dispatch(LoginAsync(loginCredential));
-      const accessToken = res.data.data.access_token.token;
-      localStorage.setItem("@accessToken", accessToken);
-      const user = res.data.data.user;
-      const userInfo = JSON.stringify(user);
-      localStorage.setItem("@userInfo", userInfo);
-      if (user.role_id !== 1) {
-        navigate("/scanner", { replace: true });
-      } else {
-        navigate("/generate", { replace: true });
-      }
+      await dispatch(LoginAsync(loginCredential));
     } catch (error) {
+      console.error(error);
       const err = error as AxiosError;
       const ErrorMessage = err.response?.data as CustomError;
-      setErrorMessage(ErrorMessage?.message || "Unkonw error");
+      if (err.code === "ERR_NETWORK") {
+        setErrorMessage("Tidak dapat terhubung ke server");
+      } else {
+        setErrorMessage(ErrorMessage?.message || "Unkonw error");
+      }
       setHasError(true);
     } finally {
       setIsFetch(false);
@@ -75,6 +70,14 @@ const Login: React.FC = () => {
       console.error(error);
     }
   };
+
+  if (AuthState.isLogged && AuthState.user) {
+    if (AuthState.user.role_id === 1) {
+      navigate("generate", { replace: true });
+    } else {
+      navigate("scanner", { replace: true });
+    }
+  }
 
   return (
     <Container

@@ -1,9 +1,16 @@
+import { EnhancedStore } from "@reduxjs/toolkit";
 import axios, {
   AxiosError,
   AxiosRequestConfig,
   AxiosRequestHeaders,
   AxiosResponse,
 } from "axios";
+import { useAppSelector } from "../redux/hook";
+import { LogoutAsync } from "../redux/slice/AuthSlice";
+import { AppDispatch } from "../redux/store";
+
+let store: EnhancedStore;
+export const injectStore = (_store: EnhancedStore) => (store = _store);
 
 const client = axios.create({
   baseURL: "https://presensi.kirei.co.id/api",
@@ -12,7 +19,8 @@ const client = axios.create({
 
 client.interceptors.request.use(
   (config: AxiosRequestConfig): AxiosRequestConfig => {
-    const accessToken = localStorage.getItem("@accessToken");
+    const Auth = store.getState().auth;
+    const accessToken = Auth.access_token;
     const header = config.headers as AxiosRequestHeaders;
     header.Authorization = `Bearer ${accessToken}`;
     return config;
@@ -28,8 +36,8 @@ client.interceptors.response.use(
   },
   (error: AxiosError): Promise<AxiosError> => {
     if (error.response?.status === 401) {
-      localStorage.setItem("@userInfo", "");
-      localStorage.setItem("@accessToken", "");
+      const AppDispatcher = store.dispatch as AppDispatch;
+      AppDispatcher(LogoutAsync());
       window.location.replace("/");
     }
     return Promise.reject(error);
