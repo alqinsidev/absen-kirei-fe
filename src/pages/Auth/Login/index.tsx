@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { LoginAsync } from "../../../redux/slice/AuthSlice";
-import AbsenService from "../../../services/absenService";
 
 interface LoginCredential {
   username: string;
