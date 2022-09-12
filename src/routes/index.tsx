@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import QrGenerator from "../pages/QrGenerator";
 import QrScanner from "../pages/QrScanner";
 import { useAppSelector } from "../redux/hook";
+import Logout from "../pages/Auth/Logout";
 
 interface PageRoute {
   path: string;
@@ -11,6 +12,7 @@ interface PageRoute {
 }
 const routes: PageRoute[] = [
   { path: "/", element: <Login /> },
+  { path: "/logout", element: <Logout /> },
   { path: "/generate", element: <QrGenerator /> },
   { path: "/scanner", element: <QrScanner /> },
 ];
