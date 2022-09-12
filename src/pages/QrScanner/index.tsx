@@ -14,14 +14,14 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState, useRef } from "react";
-import { useAppSelector } from "../../redux/hook";
+// import { useAppSelector } from "../../redux/hook";
 import AbsenService from "../../services/absenService";
-import SocketIO from "../../services/socketIO";
+// import SocketIO from "../../services/socketIO";
 let scanTimer: ReturnType<typeof setTimeout>;
 
 function QrScanner() {
   const qrRef = useRef<HTMLInputElement>(null);
-  const Auth = useAppSelector((state) => state.auth);
+  // const Auth = useAppSelector((state) => state.auth);
 
   const [token, setToken] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
@@ -36,7 +36,7 @@ function QrScanner() {
   }, []);
 
   useEffect(() => {
-    SocketIO.on("qr-scanner", handleScanResult);
+    // SocketIO.on("qr-scanner", handleScanResult);
     getPresence();
   }, []);
 
@@ -49,56 +49,57 @@ function QrScanner() {
     }
   };
 
-  const handleScanResult = (result: any) => {
-    if (result.meta) {
-      if (result.meta.is_success) {
-        setUser(result.data.user.full_name);
-        getPresence();
-        setTimeout(() => setUser(""), 10000);
-      } else {
-        setErrorMessage(result.data.error);
-        setIsError(true);
-        setTimeout(() => setIsError(false), 3000);
-      }
-    }
-    setToken("");
-  };
+  // const handleScanResult = (result: any) => {
+  //   if (result.meta) {
+  //     if (result.meta.is_success) {
+  //       setUser(result.data.user.full_name);
+  //       getPresence();
+  //       setTimeout(() => setUser(""), 10000);
+  //     } else {
+  //       setErrorMessage(result.data.error);
+  //       setIsError(true);
+  //       setTimeout(() => setIsError(false), 3000);
+  //     }
+  //   }
+  //   setToken("");
+  // };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsError(false);
     clearTimeout(scanTimer);
     setToken(e.target.value);
-    scanTimer = setTimeout(() => {
-      SocketIO.emit("qr-scanner", {
-        token: e.target.value,
-        access_token: Auth.access_token,
-      });
-    }, 500);
     // scanTimer = setTimeout(() => {
-    //   storePresence(e.target.value)
-    //     .then((res) => {
-    //       setUser(res.user.full_name);
-    //       setTimeout(() => setUser(""), 10000);
-    //     })
-    //     .catch((err) => {
-    //       setErrorMessage(err.response.data.message);
-    //       setIsError(true);
-    //     })
-    //     .finally(() => {
-    //       setToken("");
-    //     });
+    //   SocketIO.emit("qr-scanner", {
+    //     token: e.target.value,
+    //     access_token: Auth.access_token,
+    //   });
     // }, 500);
+    scanTimer = setTimeout(() => {
+      storePresence(e.target.value)
+        .then((res) => {
+          setUser(res.user.full_name);
+          getPresence();
+          setTimeout(() => setUser(""), 10000);
+        })
+        .catch((err) => {
+          setErrorMessage(err.response.data.message);
+          setIsError(true);
+        })
+        .finally(() => {
+          setToken("");
+        });
+    }, 500);
   };
 
-  // const storePresence = async (input: string) => {
-  //   try {
-  //     const res = await AbsenService.storePresence({ token: input });
-  //     return res.data.data;
-  //   } catch (error) {
-  //     console.error(error);
-  //     throw error;
-  //   }
-  // };
+  const storePresence = async (input: string) => {
+    try {
+      const res = await AbsenService.storePresence({ token: input });
+      return res.data.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
   return (
     <Container
       maxWidth="md"
