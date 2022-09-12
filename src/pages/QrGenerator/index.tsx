@@ -124,7 +124,7 @@ const QrGenerator = () => {
           )}
           {employee !== "" ? (
             <Typography variant="body1" sx={{ marginTop: 5 }}>
-              {employee.toUpperCase()}
+              {AuthState.user.full_name.toUpperCase()}
             </Typography>
           ) : (
             <Skeleton
