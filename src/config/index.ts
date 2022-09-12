@@ -1,4 +1,4 @@
 const config = {
-  baseUrl: "http://192.168.100.2:9999",
+  baseUrl: "https://presensi.kirei.co.id/api",
 };
 export default config;

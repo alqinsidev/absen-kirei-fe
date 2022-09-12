@@ -44,7 +44,6 @@ function QrScanner() {
     try {
       const res = await AbsenService.getTodayPresence();
       setPresences(res.data.data);
-      console.log(res.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -54,6 +53,7 @@ function QrScanner() {
     if (result.meta) {
       if (result.meta.is_success) {
         setUser(result.data.user.full_name);
+        getPresence();
         setTimeout(() => setUser(""), 10000);
       } else {
         setErrorMessage(result.data.error);
@@ -156,7 +156,7 @@ function QrScanner() {
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{item.user.full_name}</TableCell>
                       <TableCell>
-                        {moment(item.create_at).format("HH:mm")} WIB
+                        {moment(item.created_at).format("HH:mm")} WIB
                       </TableCell>
                     </TableRow>
                   ))}
