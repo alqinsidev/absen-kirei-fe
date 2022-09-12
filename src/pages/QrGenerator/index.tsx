@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { LogoutAsync } from "../../redux/slice/AuthSlice";
 import AbsenService from "../../services/absenService";
+import SocketIO from "../../services/socketIO";
 
 let QRGenerator: ReturnType<typeof setInterval>;
 
@@ -31,6 +32,7 @@ const QrGenerator = () => {
   const handleLogout = async () => {
     try {
       await dispatch(LogoutAsync());
+      setHasError(false);
     } catch (error) {
       console.error(error);
     }
@@ -64,6 +66,11 @@ const QrGenerator = () => {
     QRGenerator = setInterval(getQr, 5000);
 
     return () => clearInterval(QRGenerator);
+  }, []);
+
+  useEffect(() => {
+    SocketIO.on("qr-scanner", console.log);
+    SocketIO.emit("qr-scanner", { test: "hola" });
   }, []);
 
   const ErrorComponent = () => {

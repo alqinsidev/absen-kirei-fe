@@ -16,5 +16,8 @@ const AbsenService = {
   storePresence: async (payload: any) => {
     return await client.post("/employee", payload);
   },
+  getTodayPresence: async () => {
+    return await client.get("/employee/presence");
+  },
 };
 export default AbsenService;

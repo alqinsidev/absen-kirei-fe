@@ -5,7 +5,7 @@ import axios, {
   AxiosRequestHeaders,
   AxiosResponse,
 } from "axios";
-import { useAppSelector } from "../redux/hook";
+import config from "../config";
 import { LogoutAsync } from "../redux/slice/AuthSlice";
 import { AppDispatch } from "../redux/store";
 
@@ -13,7 +13,7 @@ let store: EnhancedStore;
 export const injectStore = (_store: EnhancedStore) => (store = _store);
 
 const client = axios.create({
-  baseURL: "https://presensi.kirei.co.id/api",
+  baseURL: config.baseUrl,
   timeout: 10000,
 });
 
