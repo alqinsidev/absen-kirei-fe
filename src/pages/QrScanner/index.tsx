@@ -43,7 +43,7 @@ function QrScanner() {
   const getPresence = async () => {
     try {
       const res = await AbsenService.getTodayPresence();
-      setPresences(res.data.data);
+      setPresences(res.data.data.data);
     } catch (error) {
       console.error(error);
     }
